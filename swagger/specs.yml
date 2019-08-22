@@ -1,0 +1,122 @@
+swagger: "2.0"
+info:
+  description: "A todo list manager"
+  version: "1.0.0"
+  title: "Todo List"
+host: "localhost"
+basePath: "/"
+schemes:
+- "http"
+paths:
+  /todos:
+    post:
+      summary: "Add a new todo to the list"
+      description: ""
+      operationId: "addTodo"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "todo to be added"
+        required: true
+        schema:
+          $ref: "#/definitions/Todo"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+            required:
+              - message
+        400:
+          description: "Bad request"
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+            required:
+              - message
+        500:
+          description: "Internal server error"
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+            required:
+              - message
+    get:
+      summary: "Get stored todos"
+      description: ""
+      operationId: "getTodos"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        type: "string"
+        name: "tags"
+        description: "tags to filter the search by"
+        required: false
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: object
+            properties:
+              todos:
+                type: array
+                items:
+                  $ref: "#/definitions/Todo"
+  "/todos/{name}":
+    get:
+      summary: "Get a specific todo"
+      description: ""
+      operationId: "getTodoByName"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        type: "string"
+        name: "name"
+        description: "name of the researched todo"
+        required: true
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: object
+            properties:
+              todo:
+                $ref: "#/definitions/Todo"
+        404:
+          description: "Not found"
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+            required:
+              - message
+definitions:
+    Todo:
+      properties:
+        name:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+      required:
+        - name
+
