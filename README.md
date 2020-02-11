@@ -1,4 +1,4 @@
-# Go Routing Frameworks Benchmark
+# Go Routing Frameworks Benchmark 🌐
 
 Repository to tests several golang http routing frameworks:
 
